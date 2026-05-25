@@ -1,0 +1,10 @@
+POST http://localhost:5113/api/transactions
+Content-Type: application/json
+
+{
+  "ProductID": 1,
+  "TransactionTypeID": 1,
+  "Quantity": 50,
+  "ReferenceDocument": "FAC-0001",
+  "Notes": "Carga inicial de stock"
+}

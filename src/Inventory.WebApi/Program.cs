@@ -7,14 +7,27 @@ var connectionString = builder.Configuration.GetConnectionString("SqlConnectionS
     ?? throw new InvalidOperationException("Connection string 'SqlConnectionString' not found.");
 
 builder.Services.AddScoped<IProductRepository>(provider => new ProductRepository(connectionString));
+builder.Services.AddScoped<IInventoryTransactionRepository, Inventory.Infrastructure.Repositories.InventoryTransactionRepository>();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddOpenApi();
 
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
-app.UseHttpsRedirection();
+
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+}
+
+
+//app.UseHttpsRedirection();
 app.UseAuthorization();
-app.MapControllers(); // Mapea los controladores que crearemos a continuación
+
+// Endpoints
+app.MapControllers();
+app.MapGet("/api/test", () => Results.Ok("El servidor sí está mapeando rutas dinámicas"));
 
 app.Run();
