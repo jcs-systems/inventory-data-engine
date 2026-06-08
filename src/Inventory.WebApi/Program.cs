@@ -7,23 +7,22 @@ var connectionString = builder.Configuration.GetConnectionString("SqlConnectionS
     ?? throw new InvalidOperationException("Connection string 'SqlConnectionString' not found.");
 
 builder.Services.AddScoped<IProductRepository>(provider => new ProductRepository(connectionString));
-builder.Services.AddScoped<IInventoryTransactionRepository, Inventory.Infrastructure.Repositories.InventoryTransactionRepository>();
+builder.Services.AddScoped<IStockRepository>(provider => new StockRepository(connectionString));
+
+builder.Services.AddScoped<IInventoryTransactionRepository, InventoryTransactionRepository>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
-
 builder.Services.AddControllers();
 
 var app = builder.Build();
-
 
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
 
-
-//app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseAuthorization();
 
 // Endpoints

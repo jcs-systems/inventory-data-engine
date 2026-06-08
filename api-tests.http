@@ -1,4 +1,6 @@
-POST http://localhost:5113/api/transactions
+@host = http://localhost:5113
+
+POST {{host}}/api/transactions
 Content-Type: application/json
 
 {
@@ -8,3 +10,9 @@ Content-Type: application/json
   "ReferenceDocument": "FAC-0001",
   "Notes": "Carga inicial de stock"
 }
+
+### Obtener el inventario completo
+GET {{host}}/api/stocks
+
+### Obtener el stock de un producto específico
+GET {{host}}/api/stocks/1
