@@ -1,5 +1,16 @@
 @host = http://localhost:5113
 
+### 1. Crear producto de prueba
+POST {{host}}/api/products
+Content-Type: application/json
+
+{
+  "ProductName": "Laptop ASUS TUF",
+  "sku": "ASUS-TUF-01",
+  "categoryId": 1
+}
+
+### 2. Registrar movimiento de entrada en Kardex
 POST {{host}}/api/transactions
 Content-Type: application/json
 
@@ -11,8 +22,29 @@ Content-Type: application/json
   "Notes": "Carga inicial de stock"
 }
 
-### Obtener el inventario completo
+### 3. Obtener el inventario completo
 GET {{host}}/api/stocks
 
-### Obtener el stock de un producto específico
+### 4. Obtener el stock del producto recién creado
 GET {{host}}/api/stocks/1
+
+### Obtener todo el historial de transacciones
+GET {{host}}/api/transactions/report
+
+### Obtener reporte filtrado por Producto ID = 1
+GET {{host}}/api/transactions/report?productID=1
+
+### Obtener reporte por rango de fechas
+GET {{host}}/api/transactions/report?startDate=2026-08-01T00:00:00&endDate=2026-08-31T23:59:59
+
+### Registrar movimiento de SALIDA para disparar Alerta de Stock Mínimo
+POST {{host}}/api/transactions
+Content-Type: application/json
+
+{
+  "ProductID": 1,
+  "TransactionTypeID": 2,
+  "Quantity": 2,
+  "ReferenceDocument": "FAC-SALIDA-001",
+  "Notes": "Salida de prueba para disparar alerta de correo vía Brevo"
+}

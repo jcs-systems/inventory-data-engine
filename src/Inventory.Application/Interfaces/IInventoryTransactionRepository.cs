@@ -1,8 +1,9 @@
-using Inventory.Domain;
+using Inventory.Application.DTOs;
 
 namespace Inventory.Application.Interfaces;
 
 public interface IInventoryTransactionRepository
 {
-    Task<long> RegisterTransactionAsync(InventoryTransaction transaction);
+    Task<int> CreateAsync(TransactionCreateDto transaction);
+    Task<IEnumerable<TransactionReportDto>> GetReportAsync(TransactionFilterDto filter);
 }
