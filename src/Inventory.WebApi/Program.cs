@@ -2,6 +2,7 @@ using Inventory.Application.Interfaces;
 using Inventory.Application.Models;
 using Inventory.Infrastructure.Repositories;
 using Inventory.Infrastructure.Services;
+using Inventory.WebApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,8 @@ builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 
 var app = builder.Build();
+
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {

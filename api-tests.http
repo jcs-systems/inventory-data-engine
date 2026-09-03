@@ -48,3 +48,6 @@ Content-Type: application/json
   "ReferenceDocument": "FAC-SALIDA-001",
   "Notes": "Salida de prueba para disparar alerta de correo vía Brevo"
 }
+
+### Simular error no controlado para probar el Middleware de Excepciones (Semana 4)
+GET {{host}}/api/error-test
